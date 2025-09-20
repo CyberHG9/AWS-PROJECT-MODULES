@@ -16,7 +16,7 @@ module "vpc" {
 module "security_group" {
   source  = "./modules/security-group"
   sg_name = var.sg_name
-  vpc_id  = module.vpc.vpc_id
+  vpc_id  = module.vpc.vpc_id # NOTE: if modules depend in another, use "depends" attribute, see tf doc for this.
 }
 
 # Llamamos al módulo EC2
@@ -40,6 +40,8 @@ module "s3" {
   environment = "dev"
 }
 
+
+# NOTE: move this to outputs.tf
 # Output de la VPC
 output "vpc_id" {
   value = module.vpc.vpc_id
@@ -60,7 +62,6 @@ output "ec2_public_ip" {
 }
 
 #OUTPUT S3
-
 output "s3_bucket_name" {
   value = module.s3.bucket_name
 }

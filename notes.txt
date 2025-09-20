@@ -1,0 +1,36 @@
+- IMPORTANT create backend with tfstate in s3 (configure locking)
+exmple of how it would look like (this one does not have locking, must add it)
+    provider "aws" {
+  region = "us-east-1"
+  profile = "mywalkup"
+  default_tags {
+    tags = {
+      Environment = var.environment
+      ManagedBy   = "Terraform"
+      project = "mywalkup"
+    }
+  }
+}
+
+terraform {
+  required_providers {
+    aws = {
+        source  = "hashicorp/aws"
+        version = "~> 5.72.0"
+    }
+  }
+  backend "s3" {
+    bucket         = "mywalkup-terraform-state"
+    key            = "dev/state"
+    region         = "us-east-1"
+    encrypt        = true
+  }
+}
+
+- Since we're using modules, most separate their use in different folders, for example: ./prod/main.tf ./staging/main.tf ./dev/main.tf , etc
+- for s3 will be an static page content, using s3 to deliver the web page (if possible and if it's included in the free tier, use cloudfront to distribute the content)
+- ec2 will act as backend, so put it in a private network with all the configuration (sg closed.)
+- bastion host to be able to connect to private resources (you should be able to connect to it from your machine)
+- new environment called "prod" which only will have an ec2 instance, but, inside the vpc you created in dev. (use outputs + data sources for this)
+- reference here the diagram: https://app.diagrams.net/#G1IGGDCaDZBr6mJX-m2Sv6UMEKaTNdujEh#%7B%22pageId%22%3A%22pwRhRBfabi0DguxKS82O%22%7D
+- outputs, why are they in the main.tf? -.-
