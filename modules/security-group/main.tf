@@ -11,6 +11,7 @@ resource "aws_security_group" "this" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # ruta por default pa everybody
+    # NOTE: almost never you will open permissions to everybody
   }
 
   ingress {

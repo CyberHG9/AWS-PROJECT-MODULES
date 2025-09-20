@@ -1,16 +1,18 @@
 #Create VPC
 
-resource "aws_vpc" "this" {
+resource "aws_vpc" "this" { # change this name
   cidr_block = var.cidr_block
 
   #enable DNS internal resources
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
 
-tags = {
+  tags = {
     Name = var.vpc_name
+  }
 }
 
+# HERE'S AN ERRROR
 # Create Subnet públic inside VPC
 resource "aws_subnet" "public" {
   vpc_id            = aws_vpc.this.id
@@ -49,6 +51,4 @@ resource "aws_route_table" "public" {
 resource "aws_route_table_association" "public_assoc" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
-}
-
 }
