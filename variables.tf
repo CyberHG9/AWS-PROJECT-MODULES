@@ -1,3 +1,4 @@
+# use "type" and avoid using default
 variable "region" {
   default = "us-east-1"
 }
