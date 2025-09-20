@@ -1,0 +1,2 @@
+- Since we're using modules, most separate their use in different folders, for example: ./prod ./staging ./dev , etc
+- outputs, why are they in the main.tf? -.-
