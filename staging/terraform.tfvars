@@ -1,0 +1,1 @@
+# NOTE: start using this file, THIS IS NOT FOR SENSITIVE DATA (PASSWORD, TOKEN, KEYS)

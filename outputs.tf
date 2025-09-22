@@ -1,1 +1,0 @@
-# NOTE: use outputs.tf to store all outputs, outputs at environment level are meant for resources that are going to be share between environments
