@@ -1,29 +1,39 @@
-# NOTE: use outputs.tf to store all outputs, outputs at environment level are meant for resources that are going to be share between environments
-
-# Output de la VPC
+# VPC outputs
 output "vpc_id" {
-  value = module.vpc.vpc_id
+  description = "ID of the created VPC"
+  value       = module.vpc.vpc_id
 }
-
 output "public_subnet_id" {
-  value = module.vpc.public_subnet_id
+  description = "ID of the created public subnet"
+  value       = module.vpc.public_subnet_id
 }
 
-#OUTPUT EC2
-
-output "ec2_instance_id" {
-  value = module.ec2.instance_id
+# Security Group outputs
+output "sg_id" {
+  description = "ID of the created Security Group"
+  value       = module.security_group.sg_id
 }
 
-output "ec2_public_ip" {
-  value = module.ec2.public_ip
-}
-
-#OUTPUT S3
+# S3 outputs
 output "s3_bucket_name" {
-  value = module.s3.bucket_name
+  description = "Name of the created S3 bucket"
+  value       = module.s3.bucket_name
+}
+output "s3_bucket_arn" {
+  description = "ARN of the created S3 bucket"
+  value       = module.s3.bucket_arn
 }
 
-output "s3_bucket_arn" {
-  value = module.s3.bucket_arn
+# EC2 outputs
+output "ec2_instance_id" {
+  description = "ID of the created EC2 instance"
+  value       = module.ec2.instance_id
+}
+output "ec2_public_ip" {
+  description = "Public IP address of the EC2 instance"
+  value       = module.ec2.public_ip
+}
+output "ec2_private_ip" {
+  description = "Private IP address of the EC2 instance"
+  value       = module.ec2.private_ip
 }

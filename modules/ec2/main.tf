@@ -1,5 +1,5 @@
-# Instancia EC2 en subnet pública
-resource "aws_instance" "this" { # name mostly never should be "this"
+# Crear instancia EC2 en subnet pública
+resource "aws_instance" "ec2" {
   ami                         = var.ami_id
   instance_type               = var.instance_type
   subnet_id                   = var.subnet_id

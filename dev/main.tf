@@ -7,60 +7,49 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "terraform-states-hesler"   # bucket name
-    key            = "dev/terraform.tfstate"    # tfstate de dev
-    region         = "us-east-1"
-    encrypt        = true
-    dynamodb_table = "terraform-locks"          # tabla DynamoDB para locking
+    bucket       = "terraform-states-hesler"
+    key          = "dev/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
   }
 }
 
 provider "aws" {
-  region  = var.region
-  profile = "mywalkup"
-
-## is missing the config of default tags, but first create the table in DynamoDB.
+  region = var.aws_region
 }
 
-# Llamamos al módulo de VPC
+# Módulo VPC
 module "vpc" {
-  source             = "./modules/vpc"
-  vpc_name           = var.vpc_name
-  cidr_block         = var.vpc_cidr
-  public_subnet_cidr = var.public_subnet_cidr
-  az                 = var.az
+  source              = "../modules/vpc"
+  vpc_name            = var.vpc_name
+  cidr_block          = var.vpc_cidr
+  public_subnet_cidr  = var.public_subnet_cidr
+  az                  = var.availability_zone
 }
 
-
-# Llamamos al módulo Security Group
+# Módulo Security Group
 module "security_group" {
-  source  = "./modules/security-group"
+  source  = "../modules/security-group"
   sg_name = var.sg_name
-  vpc_id  = module.vpc.vpc_id # NOTE: if modules depend in another, use "depends" attribute, see tf doc for this.
-                              #HR module security_group depends of module vpc, bc needs vpc_id, Terraform detects this automatically, bc vpc_id = module.vpc.vpc_id and that create a implicit dependency.
+  vpc_id  = module.vpc.vpc_id
 }
 
-# Llamamos al módulo EC2
+# Módulo S3
+module "s3" {
+  source      = "../modules/s3"
+  bucket_name = var.bucket_name
+  environment = var.environment
+  versioning  = var.versioning
+  acl         = var.acl
+}
+
+# Módulo EC2
 module "ec2" {
-  source        = "./modules/ec2"
+  source        = "../modules/ec2"
   ami_id        = var.ami_id
   instance_type = var.instance_type
   subnet_id     = module.vpc.public_subnet_id
   sg_id         = module.security_group.sg_id
   instance_name = var.instance_name
 }
-
-# Llamamos al modulo de S3
-
-module "s3" {
-  
-  source      = "./modules/s3"
-  bucket_name = var.s3_bucket_name
-  acl         = "private"
-  versioning  = true
-  environment = "dev"
-}
-
-
-# NOTE: move this to outputs.tf
-#HR resolved, moved to outputs.tf 

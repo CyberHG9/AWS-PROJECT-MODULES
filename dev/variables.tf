@@ -1,52 +1,69 @@
-# NOTE: use "type" and avoid using default 
-#HR Done
-
-variable "region" {
-  description = "AWS Region"
+variable "aws_region" {
+  description = "AWS region where resources will be created"
   type        = string
 }
 
+variable "tags" {
+  description = "Default tags applied to all resources"
+  type        = map(string)
+  default     = {}
+}
+
+# VPC
 variable "vpc_name" {
-  description = "Nombre de la VPC"
+  description = "Name of the VPC"
   type        = string
 }
-
 variable "vpc_cidr" {
-  description = "CIDR de la VPC"
+  description = "CIDR block for the VPC"
   type        = string
 }
-
 variable "public_subnet_cidr" {
-  description = "CIDR de la Subnet Pública"
+  description = "CIDR block for the public subnet"
+  type        = string
+}
+variable "availability_zone" {
+  description = "Availability Zone to deploy the subnet"
   type        = string
 }
 
-variable "az" {
-  description = "Availability Zone"
-  type        = string
-}
-
+# Security Group
 variable "sg_name" {
-  description = "Nombre del Security Group"
+  description = "Name of the Security Group"
   type        = string
 }
 
-variable "instance_name" {
-  description = "Nombre de la instancia EC2"
+# S3
+variable "bucket_name" {
+  description = "Name of the S3 bucket"
   type        = string
 }
+variable "environment" {
+  description = "Deployment environment (dev, prod, staging, etc.)"
+  type        = string
+}
+variable "versioning" {
+  description = "Enable versioning on the S3 bucket"
+  type        = bool
+  default     = true
+}
+variable "acl" {
+  description = "Access Control List for the S3 bucket (private, public-read, etc.)"
+  type        = string
+  default     = "private"
+}
 
+# EC2
 variable "ami_id" {
-  description = "Amazon Linux 2 AMI"
+  description = "AMI ID to launch the EC2 instance"
   type        = string
 }
-
 variable "instance_type" {
-  description = "Tipo de instancia EC2"
+  description = "EC2 instance type"
   type        = string
+  default     = "t2.micro"
 }
-
-variable "s3_bucket_name" {
-  description = "Nombre del bucket S3"
+variable "instance_name" {
+  description = "Name of the EC2 instance"
   type        = string
 }

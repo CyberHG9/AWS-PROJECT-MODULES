@@ -1,9 +1,11 @@
-# Output del nombre del bucket
+# Nombre del bucket
 output "bucket_name" {
-  value = aws_s3_bucket.this.id
+  value       = aws_s3_bucket.bucket.bucket
+  description = "Nombre del bucket S3 creado"
 }
 
-# Output del ARN del bucket
+# ARN del bucket
 output "bucket_arn" {
-  value = aws_s3_bucket.this.arn
+  value       = aws_s3_bucket.bucket.arn
+  description = "ARN del bucket S3 creado"
 }

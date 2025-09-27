@@ -1,17 +1,16 @@
-# Create Security Group for access control
-resource "aws_security_group" "this" {
+# Create Security Group for backend EC2
+resource "aws_security_group" "backend_sg" {
   name        = var.sg_name
-  description = "Security Group managed by Terraform"
+  description = "Security Group for backend EC2 instance"
   vpc_id      = var.vpc_id
 
-  # Reglas de entrada (ejemplo: SSH y HTTP)
+  # Ingress rules
   ingress {
-    description = "Allow SSH"
+    description = "Allow SSH (restrict this in production!)"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # ruta por default pa everybody
-    # NOTE: almost never you will open permissions to everybody
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -19,15 +18,15 @@ resource "aws_security_group" "this" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #CHANGE THIS TO RESTRICT ACCESS IF NEEDED
   }
 
-  # Reglas de salida (permitimos todo por defecto) luego podemos ir agregando mas detalle
+  # Egress rules
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #CHANGE THIS TO RESTRICT ACCESS IF NEEDED
   }
 
   tags = {
