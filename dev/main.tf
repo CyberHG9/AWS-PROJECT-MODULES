@@ -30,6 +30,7 @@ module "vpc" {
 
 # Módulo Security Group
 module "security_group" {
+  depends_on = [ module.vpc ]
   source  = "../modules/security-group"
   sg_name = var.sg_name
   vpc_id  = module.vpc.vpc_id
@@ -45,7 +46,9 @@ module "s3" {
 }
 
 # Módulo EC2
+# NOTE: CONFIGURE EC2 WITH KEY
 module "ec2" {
+  depends_on = [ module.vpc, module.security_group ]
   source        = "../modules/ec2"
   ami_id        = var.ami_id
   instance_type = var.instance_type

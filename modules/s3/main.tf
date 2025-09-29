@@ -17,7 +17,7 @@ resource "aws_s3_bucket_versioning" "versioning" {
 }
 
 # Configuración de ACL (Access Control List)
-resource "aws_s3_bucket_acl" "acl" {
-  bucket = aws_s3_bucket.bucket.id
-  acl    = var.acl
-}
+# resource "aws_s3_bucket_acl" "acl" {
+#   bucket = aws_s3_bucket.bucket.id
+#   acl    = var.acl
+# }

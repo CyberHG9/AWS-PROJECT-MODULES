@@ -21,6 +21,6 @@ versioning  = true
 acl         = "private"
 
 # EC2
-ami_id        = "ami-0c55b159cbfafe1f0"
-instance_type = "t2.micro"
+ami_id        = "ami-08982f1c5bf93d976"
+instance_type = "t3.micro"
 instance_name = "dev-instance"

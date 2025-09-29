@@ -34,3 +34,12 @@ terraform {
 - new environment called "prod" which only will have an ec2 instance, but, inside the vpc you created in dev. (use outputs + data sources for this) ON GOING
 - reference here the diagram: https://app.diagrams.net/#G1IGGDCaDZBr6mJX-m2Sv6UMEKaTNdujEh#%7B%22pageId%22%3A%22pwRhRBfabi0DguxKS82O%22%7D
 - outputs, why are they in the main.tf? -.- (DONE)
+
+
+
+
+
+SECOND private
+BACKEND en ec2
+  nginx -> 80 -> 8080 app
+  app -> docker -> app en node con un healthcheck en el root (osea en /) que devuelve 200
