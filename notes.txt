@@ -39,7 +39,11 @@ terraform {
 
 
 
-SECOND private
+SECOND PART
+NETWORK
+  create private networks
+  create IN THE PRIVATE NETWORK a RDS instance running oracle. (use random resource in terraform to create the password and store the credentials in parameter store)
+    what do I mean by credentials? host, username, db name, and password.
 BACKEND en ec2
   nginx -> 80 -> 8080 app
   app -> docker -> app en node con un healthcheck en el root (osea en /) que devuelve 200
