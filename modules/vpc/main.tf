@@ -11,6 +11,38 @@ resource "aws_vpc" "vpc" {
   }
 }
 
+#PART 2 - create private network 
+
+#Private Subnet for one AZ
+resource "aws_subnet" "private_subnet" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = var.private_subnet_cidr
+  availability_zone       = var.az
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "${var.vpc_name}-private-subnet"
+  }
+} 
+
+# CHANGE bc error need 2 az
+
+# resource "aws_subnet" "private_a" {
+#   vpc_id            = aws_vpc.private_a.id
+#   cidr_block        = var.private_subnet_cidrs["us-east-1a"]
+#   availability_zone = "us-east-1a"
+#   tags = { Name = "private-subnet-a" }
+# }
+
+# resource "aws_subnet" "private_b" {
+#   vpc_id            = aws_vpc.private_b.id
+#   cidr_block        = var.private_subnet_cidrs["us-east-1b"]
+#   availability_zone = "us-east-1b"
+#   tags = { Name = "private-subnet-b" }
+# }
+
+
+
 # Create Public Subnet inside VPC. (added map_public_ip you said here there was a mistake)
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.vpc.id

@@ -18,6 +18,21 @@ variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
 }
+
+variable "private_subnet_cidr" {
+  description = "CIDR block for the private subnet"
+  type = string
+}
+
+#JUST FOR DDBB EXERCISE
+variable "private_subnet_cidrs" {
+  type = map(string)
+  default = {
+    "us-east-1a" = "10.0.2.0/24"
+    "us-east-1b" = "10.0.3.0/24"
+  }
+}
+
 variable "public_subnet_cidr" {
   description = "CIDR block for the public subnet"
   type        = string
@@ -66,4 +81,29 @@ variable "instance_type" {
 variable "instance_name" {
   description = "Name of the EC2 instance"
   type        = string
+}
+
+# RDS
+variable "db_identifier" {
+  type = string
+}
+
+variable "db_engine" {
+  type = string
+}
+
+variable "db_engine_version" {
+  type = string
+}
+
+variable "db_instance_class" {
+  type = string
+}
+
+variable "db_name" {
+  type = string
+}
+
+variable "db_username" {
+  type = string
 }

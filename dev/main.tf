@@ -24,9 +24,26 @@ module "vpc" {
   source              = "../modules/vpc"
   vpc_name            = var.vpc_name
   cidr_block          = var.vpc_cidr
+  private_subnet_cidr = var.private_subnet_cidr
   public_subnet_cidr  = var.public_subnet_cidr
   az                  = var.availability_zone
 }
+
+# Módulo RDS
+module "rds" {
+  depends_on = [module.vpc, module.security_group]
+
+  source            = "../modules/rds"
+  db_identifier     = "mydb-dev"
+  db_engine         = "postgres"        
+  db_engine_version = "15.3"               
+  db_instance_class = "db.t3.micro"        # dentro del free tier
+  db_name           = "mydb"
+  db_username       = "admin"
+  sg_id             = module.security_group.sg_id
+  private_subnet_id = module.vpc.private_subnet_id
+}
+
 
 # Módulo Security Group
 module "security_group" {

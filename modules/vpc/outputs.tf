@@ -4,6 +4,11 @@ output "vpc_id" {
   value = aws_vpc.vpc.id
 }
 
+# Output de la Subnet privada
+output "private_subnet_id" {
+  value = aws_subnet.private_subnet.id
+}
+
 # Output de la Subnet pública
 output "public_subnet_id" {
   value = aws_subnet.public.id
@@ -20,3 +25,11 @@ output "public_route_table_id" {
   description = "ID de la route table pública"
   value       = aws_route_table.public.id
 }
+
+# output "private_subnet_a_id" {
+#   value = aws_subnet.private_a.id
+# }
+
+# output "private_subnet_b_id" {
+#   value = aws_subnet.private_b.id
+# }
