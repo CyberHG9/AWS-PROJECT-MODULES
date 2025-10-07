@@ -28,3 +28,9 @@ variable "instance_name" {
   description = "Nombre de la instancia EC2"
   type        = string
 }
+
+variable "user_data" {
+  description = "Script opcional para inicializar la EC2"
+  type        = string
+  default     = ""
+}

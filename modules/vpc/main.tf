@@ -43,7 +43,7 @@ resource "aws_subnet" "private_subnet" {
 
 
 
-# Create Public Subnet inside VPC. (added map_public_ip you said here there was a mistake)
+# Create Public Subnet inside VPC.
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = var.public_subnet_cidr
