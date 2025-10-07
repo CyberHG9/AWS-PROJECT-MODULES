@@ -47,3 +47,13 @@ NETWORK
 BACKEND en ec2
   nginx -> 80 -> 8080 app
   app -> docker -> app en node con un healthcheck en el root (osea en /) que devuelve 200
+
+
+THIRD PART
+- finish private subnets configuration (2 subnets, nat gateway, route table, route table association for each subnet)
+- create rds postgres db (HAS TO BE IN PRIVATE SUBNET BLOCKING PUBLIC ACCESS)
+- move backend ec2 application to private subnet
+- make use of count to create (or not) a bastion host
+  - you need to be capable of connecting to the postgres db from your local machine
+- use dynamic blocks to configure ingress rules for SG
+- make use of terraform functions (trim, upper, contains, date, etc)
