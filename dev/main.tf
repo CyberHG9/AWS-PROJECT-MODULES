@@ -64,6 +64,8 @@ module "s3" {
 
 # Módulo EC2
 # NOTE: CONFIGURE EC2 WITH KEY
+# NOTE: move ec2 api app to private subnet
+# NOTE: make that you could dinamically add a bastion host
 module "ec2" {
   depends_on = [ module.vpc, module.security_group ]
   source        = "../modules/ec2"
@@ -73,4 +75,5 @@ module "ec2" {
   sg_id         = module.security_group.sg_id
   instance_name = var.instance_name
   user_data = file("../modules/ec2/user_data_amazonlinux.sh")
+  # create_bastion_host = true/false
 }
