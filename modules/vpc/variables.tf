@@ -11,33 +11,23 @@ variable "cidr_block" {
   default     = "10.0.0.0/16"
 }
 
-# CIDR de la subnet privada
-variable "private_subnet_cidr" {
-  description = "CIDR de la subnet privada"
-  type        = string
-  default     = "10.0.2.0/24"
+# Lista de Availability Zones
+variable "azs" {
+  description = "Lista de Availability Zones a usar"
+  type        = list(string)
+  default     = ["us-east-1a", "us-east-1b"]
 }
 
-# variable "private_subnet_cidrs" {
-#   type = map(string)
-#   default = {
-#     "us-east-1a" = "10.0.2.0/24"
-#     "us-east-1b" = "10.0.3.0/24"
-#   }
-# }
-
-
-
-# CIDR de la subnet pública
-variable "public_subnet_cidr" {
-  description = "CIDR de la subnet pública"
-  type        = string
-  default     = "10.0.1.0/24"
+# CIDRs para public subnets, debe coincidir en longitud con azs
+variable "public_subnet_cidrs" {
+  description = "Lista de CIDRs para subnets públicas"
+  type        = list(string)
+  default     = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
-# Availability Zone
-variable "az" {
-  description = "Zona de disponibilidad"
-  type        = string
-  default     = "us-east-1a"
+# CIDRs para private subnets
+variable "private_subnet_cidrs" {
+  description = "Lista de CIDRs para subnets privadas"
+  type        = list(string)
+  default     = ["10.0.11.0/24", "10.0.12.0/24"]
 }

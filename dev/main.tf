@@ -19,35 +19,34 @@ provider "aws" {
   region = var.aws_region
 }
 
-# Módulo VPC
+# Módulo VPC - agregamos listas ahora
 module "vpc" {
-  source              = "../modules/vpc"
-  vpc_name            = var.vpc_name
-  cidr_block          = var.vpc_cidr
-  private_subnet_cidr = var.private_subnet_cidr
-  public_subnet_cidr  = var.public_subnet_cidr
-  az                  = var.availability_zone
+  source               = "../modules/vpc"
+  vpc_name             = var.vpc_name
+  cidr_block           = var.vpc_cidr
+  azs                  = var.azs                     # lista de AZs
+  public_subnet_cidrs  = var.public_subnet_cidrs     # lista CIDRs public
+  private_subnet_cidrs = var.private_subnet_cidrs    # lista CIDRs private
 }
 
-# Módulo RDS
+# Módulo RDS (usar lista de private_subnet_ids)
 module "rds" {
   depends_on = [module.vpc, module.security_group]
 
-  source            = "../modules/rds"
-  db_identifier     = "mydb-dev"
-  db_engine         = "postgres"        
-  db_engine_version = "15.3"               
-  db_instance_class = "db.t3.micro"        # dentro del free tier
-  db_name           = "mydb"
-  db_username       = "admin"
-  sg_id             = module.security_group.sg_id
-  private_subnet_id = module.vpc.private_subnet_id
+  source                = "../modules/rds"
+  db_identifier         = var.db_identifier
+  db_engine             = var.db_engine
+  db_engine_version     = var.db_engine_version
+  db_instance_class     = var.db_instance_class
+  db_name               = var.db_name
+  db_username           = var.db_username
+  sg_id                 = module.security_group.rds_sg_id   # usar rds SG
+  private_subnet_ids    = module.vpc.private_subnet_ids     # Pass the list of private subnet IDs
 }
 
-
-# Módulo Security Group
+# Módulo Security Group 
 module "security_group" {
-  depends_on = [ module.vpc ]
+  depends_on = [module.vpc]
   source  = "../modules/security-group"
   sg_name = var.sg_name
   vpc_id  = module.vpc.vpc_id
@@ -67,13 +66,17 @@ module "s3" {
 # NOTE: move ec2 api app to private subnet
 # NOTE: make that you could dinamically add a bastion host
 module "ec2" {
-  depends_on = [ module.vpc, module.security_group ]
   source        = "../modules/ec2"
   ami_id        = var.ami_id
   instance_type = var.instance_type
-  subnet_id     = module.vpc.public_subnet_id
-  sg_id         = module.security_group.sg_id
+  subnet_id     = module.vpc.private_subnet_ids[0]
+  sg_id         = module.security_group.backend_sg_id
   instance_name = var.instance_name
-  user_data = file("../modules/ec2/user_data_amazonlinux.sh")
-  # create_bastion_host = true/false
+  user_data     = file("../modules/ec2/user_data_amazonlinux.sh")
+
+  # >>> Bastion variables
+  create_bastion_host = true
+  public_subnet_id    = module.vpc.public_subnet_ids[0]
+  bastion_sg_id       = module.security_group.bastion_sg_id
+  key_name            = var.key_name
 }

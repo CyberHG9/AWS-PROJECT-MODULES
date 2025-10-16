@@ -6,11 +6,13 @@ tags = {
 }
 
 # VPC
-vpc_name           = "dev-vpc"
-vpc_cidr           = "10.0.0.0/16"
-private_subnet_cidr = "10.0.2.0/24"
-public_subnet_cidr = "10.0.1.0/24"
-availability_zone  = "us-east-1a"
+vpc_name = "dev-vpc"
+vpc_cidr = "10.0.0.0/16"
+
+# >>> ADDED: listas de AZs y CIDRs
+azs = ["us-east-1a", "us-east-1b"]
+public_subnet_cidrs = ["10.0.100.0/24", "10.0.200.0/24"]
+private_subnet_cidrs = ["10.0.11.0/24", "10.0.12.0/24"]
 
 # Security Group
 sg_name = "dev-sg"
@@ -25,11 +27,12 @@ acl         = "private"
 ami_id        = "ami-08982f1c5bf93d976"
 instance_type = "t3.micro"
 instance_name = "dev-instance"
+key_name      = "Hesler-Key"
 
 # RDS Config (PostgreSQL)
 db_identifier     = "postgres-db-dev"
 db_engine         = "postgres"
-db_engine_version = "15.3"         
-db_instance_class = "db.t3.micro"  
+db_engine_version = "15"
+db_instance_class = "db.t3.micro"
 db_name           = "mydb"
-db_username       = "admin"
+db_username       = "hesleruser"

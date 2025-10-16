@@ -1,6 +1,6 @@
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "${var.db_identifier}-subnet-group"
-  subnet_ids = [var.private_subnet_id]
+  subnet_ids = var.private_subnet_ids
 
   tags = {
     Name = "${var.db_identifier}-subnet-group"
@@ -10,7 +10,7 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
 resource "random_password" "db_password" {
   length           = 16
   special          = true
-  override_special = "_%@"
+  override_special = "_%"
 }
 
 resource "aws_db_instance" "rds_instance" {

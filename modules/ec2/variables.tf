@@ -34,3 +34,25 @@ variable "user_data" {
   type        = string
   default     = ""
 }
+
+variable "create_bastion_host" {
+  description = "Si es True crea el bastion hot en la subnet pública"
+  type        = bool
+  default     = false
+}
+
+variable "public_subnet_id" {
+  description = "Public subnet for bastion host"
+  type        = string
+}
+
+variable "bastion_sg_id" {
+  description = "Security group ID for the bastion host"
+  type        = string
+}
+
+variable "key_name" {
+  description = "SSH key pair name for connecting to EC2 instances"
+  type        = string
+  default     = null
+}
