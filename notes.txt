@@ -57,3 +57,10 @@ THIRD PART
   - you need to be capable of connecting to the postgres db from your local machine
 - use dynamic blocks to configure ingress rules for SG
 - make use of terraform functions (trim, upper, contains, date, etc)
+
+
+FOURTH PART
+- store the db password in any place, parameter store or secrets manager.
+  - this has to be automatically done, no manually. (use outputs in rds or inside the same module create a secret resources/parameter store resource)
+- test connection from the bastion host and if possible from the ec2 instance.
+- Create pipeline to update both, FE and BE application. (gh actions or use aws pipeline)

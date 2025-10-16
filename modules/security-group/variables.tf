@@ -32,6 +32,13 @@ variable "backend_ingress_rules" {
       to_port     = 80
       protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
+      description = "Allow HTTPS just to Mario Rosales"
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_blocks = ["143.208.18.118/32"]
     }
   ]
 }

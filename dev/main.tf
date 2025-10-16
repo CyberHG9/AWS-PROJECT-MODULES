@@ -80,3 +80,10 @@ module "ec2" {
   bastion_sg_id       = module.security_group.bastion_sg_id
   key_name            = var.key_name
 }
+
+# data "aws_ssm_parameter" "foo" {
+#   name = "test"
+# }
+# output "test" {
+#   value = data.aws_ssm_parameter.foo.insecure_value
+# }
