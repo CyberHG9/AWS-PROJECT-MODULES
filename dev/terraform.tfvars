@@ -36,3 +36,17 @@ db_engine_version = "15"
 db_instance_class = "db.t3.micro"
 db_name           = "mydb"
 db_username       = "hesleruser"
+
+# Budget Alarm
+
+name                = "dev-environment-budget"
+budget_type         = "COST"
+limit_amount        = 40
+limit_unit          = "USD"
+time_unit           = "MONTHLY"
+comparison_operator = "GREATER_THAN"
+threshold           = 80
+threshold_type      = "PERCENTAGE"
+notification_type   = "ACTUAL"
+sns_topic_name      = "dev-budget-alerts"
+email               = "tu-email@ejemplo.com"

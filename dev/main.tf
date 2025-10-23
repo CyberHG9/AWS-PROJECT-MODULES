@@ -87,3 +87,22 @@ module "ec2" {
 # output "test" {
 #   value = data.aws_ssm_parameter.foo.insecure_value
 # }
+
+
+# BUDGET ALERTS - SNS
+
+module "budget" {
+  source = "../modules/budget"
+
+  name                = var.name
+  budget_type         = var.budget_type
+  limit_amount        = var.limit_amount
+  limit_unit          = var.limit_unit
+  time_unit           = var.time_unit
+  comparison_operator = var.comparison_operator
+  threshold           = var.threshold
+  threshold_type      = var.threshold_type
+  notification_type   = var.notification_type
+  sns_topic_name      = var.sns_topic_name
+  email               = var.email
+}

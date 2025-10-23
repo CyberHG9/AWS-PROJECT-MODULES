@@ -62,6 +62,7 @@ THIRD PART
 FOURTH PART
 - store the db password in any place, parameter store or secrets manager.
   - this has to be automatically done, no manually. (use outputs in rds or inside the same module create a secret resources/parameter store resource)
+- setup a cost budget using AWS budgets
 - test connection from the bastion host and if possible from the ec2 instance.
 - Create pipeline to update both, FE and BE application. (gh actions or use aws pipeline)
 - create a functional lambda tf + source code.

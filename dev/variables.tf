@@ -128,3 +128,49 @@ variable "key_name" {
   description = "The name of the SSH key pair to use for EC2 instances"
   type        = string
 }
+
+# Variables for Budgets
+
+variable "name" {
+  type = string
+}
+
+variable "budget_type" {
+  type = string
+}
+
+variable "limit_amount" {
+  type = number
+}
+
+variable "limit_unit" {
+  type = string
+}
+
+variable "time_unit" {
+  type = string
+}
+
+variable "comparison_operator" {
+  type = string
+}
+
+variable "threshold" {
+  type = number
+}
+
+variable "threshold_type" {
+  type = string
+}
+
+variable "notification_type" {
+  type = string
+}
+
+variable "sns_topic_name" {
+  type = string
+}
+
+variable "email" {
+  type = string
+}

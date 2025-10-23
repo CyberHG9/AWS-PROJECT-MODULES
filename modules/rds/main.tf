@@ -32,3 +32,24 @@ resource "aws_db_instance" "rds_instance" {
     Name = var.db_identifier
   }
 }
+
+#Aqui vamos a almacenar la contraseña generada y ademas le vamos agregar al secret content JSON con otros datos importantes,
+    # If I need the password later, I can bring and use from the output. 
+
+resource "aws_secretsmanager_secret" "db_secret" {
+  name        = "${var.db_identifier}-credentials"
+  description = "Database credentials for ${var.db_identifier}"
+}
+
+# Add secret content (JSON)
+resource "aws_secretsmanager_secret_version" "db_secret_value" {
+  secret_id     = aws_secretsmanager_secret.db_secret.id
+  secret_string = jsonencode({
+    username = var.db_username
+    password = random_password.db_password.result
+    engine   = var.db_engine
+    host     = aws_db_instance.rds_instance.address
+    port     = aws_db_instance.rds_instance.port
+    dbname   = var.db_name
+  })
+}
