@@ -105,4 +105,6 @@ module "budget" {
   notification_type   = var.notification_type
   sns_topic_name      = var.sns_topic_name
   email               = var.email
+  from_email          = var.from_email
+  to_email            = var.to_email 
 }

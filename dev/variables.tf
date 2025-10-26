@@ -174,3 +174,11 @@ variable "sns_topic_name" {
 variable "email" {
   type = string
 }
+
+variable "from_email" {
+  type = string
+}
+
+variable "to_email" {
+  type = string
+}

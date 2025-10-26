@@ -53,3 +53,4 @@ resource "aws_secretsmanager_secret_version" "db_secret_value" {
     dbname   = var.db_name
   })
 }
+

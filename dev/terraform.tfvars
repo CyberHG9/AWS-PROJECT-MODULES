@@ -49,4 +49,6 @@ threshold           = 80
 threshold_type      = "PERCENTAGE"
 notification_type   = "ACTUAL"
 sns_topic_name      = "dev-budget-alerts"
-email               = "tu-email@ejemplo.com"
+email               = "awshfgp@gmail.com"
+from_email = "awshfgp@gmail.com"
+to_email   = "yohesler@gmail.com"

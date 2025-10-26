@@ -47,3 +47,7 @@ output "rds_port" {
   description = "value of the RDS port"
   value = module.rds.db_port
 }
+
+output "bastion_public_ip" {
+  value = module.ec2.bastion_public_ip
+}

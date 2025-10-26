@@ -60,3 +60,11 @@ variable "email" {
   description = "Correo electrónico para recibir alertas"
   type        = string
 }
+
+variable "from_email" {
+  type = string
+}
+
+variable "to_email" {
+  type = string
+}
