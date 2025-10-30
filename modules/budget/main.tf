@@ -72,6 +72,8 @@ resource "aws_lambda_function" "budget_email_lambda" {
     variables = {
       FROM_EMAIL = var.from_email
       TO_EMAIL   = var.to_email
+      SLACK_WEBHOOK_URL = var.slack_webhook_url   # 👈 En mayúsculas
+      SLACK_CHANNEL     = var.slack_channel    # Canal de Slack donde podria mandar las notificaciones
     }
   }
 }

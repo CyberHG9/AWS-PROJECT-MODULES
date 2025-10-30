@@ -107,4 +107,6 @@ module "budget" {
   email               = var.email
   from_email          = var.from_email
   to_email            = var.to_email 
+  slack_webhook_url   = var.slack_webhook_url
+  slack_channel       = var.slack_channel
 }

@@ -68,3 +68,11 @@ variable "from_email" {
 variable "to_email" {
   type = string
 }
+
+variable "slack_webhook_url" {
+  type = string
+}
+
+variable "slack_channel" {
+  type = string
+}

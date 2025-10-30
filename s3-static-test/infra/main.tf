@@ -28,6 +28,10 @@ resource "aws_s3_bucket_website_configuration" "static_site" {
   }
 }
 
+resource "aws_cloudfront_origin_access_identity" "oai" {
+  comment = "OAI for my static site bucket"
+}
+
 resource "aws_s3_bucket_policy" "static_site_policy" {
   bucket = aws_s3_bucket.static_site.id
 

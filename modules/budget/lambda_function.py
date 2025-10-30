@@ -1,44 +1,46 @@
 import json
-import boto3
 import os
+import boto3
+import urllib.request
 
-def lambda_handler(event, context):
-    print("🔔 Budget alert received:")
-    print(json.dumps(event))
+FROM_EMAIL = os.environ['FROM_EMAIL']
+TO_EMAIL = os.environ['TO_EMAIL']
+SLACK_WEBHOOK_URL = os.environ['SLACK_WEBHOOK_URL']
+SLACK_CHANNEL = os.environ.get('SLACK_CHANNEL', '#alerts')
 
-    # Extraemos los datos del evento 
-    try:
-        sns_message = event['Records'][0]['Sns']['Message']
-        message_data = json.loads(sns_message)
-    except Exception:
-        message_data = {"raw_message": sns_message}
+ses = boto3.client('ses')
 
-    # Creamos el contenido del correon 
-    subject = "AWS Budget Alert: Limit Exceeded"
-    body = f"""
-    Hello from AWS Lambda,
-
-    Your budget alert has been triggered with the following details:
-
-    Budget Name: {message_data.get('budgetName', 'Unknown')}
-    Alert Type: {message_data.get('notificationType', 'N/A')}
-    Threshold: {message_data.get('threshold', 'N/A')}%
-    Current Spend: {message_data.get('costAmount', 'N/A')} {message_data.get('costUnit', '')}
-    Limit: {message_data.get('budgetLimitAmount', 'N/A')} {message_data.get('budgetLimitUnit', '')}
-
-    Please review your resources in the AWS Console.
-    """
-
-    # Enviar correo via SES
-    ses = boto3.client('ses')
-    response = ses.send_email(
-        Source=os.environ['FROM_EMAIL'],
-        Destination={'ToAddresses': [os.environ['TO_EMAIL']]},
+def send_email(subject, message):
+    ses.send_email(
+        Source=FROM_EMAIL,
+        Destination={'ToAddresses': [TO_EMAIL]},
         Message={
             'Subject': {'Data': subject},
-            'Body': {'Text': {'Data': body}}
+            'Body': {'Text': {'Data': message}}
         }
     )
 
-    print("📧 Email sent successfully:", response)
-    return {"statusCode": 200, "body": "Alert processed and email sent."}
+def send_slack_message(subject, message):
+    payload = {
+        "channel": SLACK_CHANNEL,
+        "text": f":warning: *{subject}*\n{message}"
+    }
+    data = json.dumps(payload).encode('utf-8')
+    req = urllib.request.Request(
+        SLACK_WEBHOOK_URL,
+        data=data,
+        headers={'Content-Type': 'application/json'}
+    )
+    urllib.request.urlopen(req)
+
+def lambda_handler(event, context):
+    print("Event received:", event)
+    
+    subject = "AWS Budget Alert Triggered"
+    message = json.dumps(event, indent=2)
+    
+    # Send both notifications
+    send_email(subject, message)
+    send_slack_message(subject, message)
+    
+    return {'statusCode': 200, 'body': 'Notifications sent'}
