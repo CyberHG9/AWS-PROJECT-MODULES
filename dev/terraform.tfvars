@@ -52,5 +52,4 @@ sns_topic_name      = "dev-budget-alerts"
 email               = "awshfgp@gmail.com"
 from_email          = "awshfgp@gmail.com"
 to_email            = "yohesler@gmail.com"
-#SLACK WEBHOOK URL
-slack_channel     = "#budget-alerts"
+
