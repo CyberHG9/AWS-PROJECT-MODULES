@@ -1,0 +1,16 @@
+---- Table for taks 1 ----
+
+CREATE TABLE IF NOT EXISTS posts_by_blog (
+  userid      varchar,
+  blog_title  varchar,
+  posted_at   timestamp,
+  entry_title varchar,
+  content     varchar,
+  category    varchar,
+  PRIMARY KEY ((userid, blog_title), posted_at)
+)
+WITH CLUSTERING ORDER BY (posted_at DESC);
+
+
+----
+
