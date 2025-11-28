@@ -1,16 +1,45 @@
 ---- Table for taks 1 ----
 
-CREATE TABLE IF NOT EXISTS posts_by_blog (
+CREATE TABLE posts (
   userid      varchar,
   blog_title  varchar,
   posted_at   timestamp,
   entry_title varchar,
   content     varchar,
   category    varchar,
-  PRIMARY KEY ((userid, blog_title), posted_at)
+  PRIMARY KEY (userid, blog_title, posted_at)
 )
-WITH CLUSTERING ORDER BY (posted_at DESC);
+WITH CLUSTERING ORDER BY (blog_title ASC, posted_at DESC);
 
 
-----
+---- task 2 
 
+CREATE TABLE incidents_by_vehicle (
+    reg_country varchar,
+    reg_nr      varchar,
+    driver_pid  varchar,
+    driver_name varchar,
+    incident_time     timestamp,
+    incident_location varchar,
+    penalty_points    int,
+    PRIMARY KEY ((reg_country, reg_nr), incident_time)
+) WITH CLUSTERING ORDER BY (incident_time DESC);
+
+CREATE TABLE incidents_by_driver (
+    driver_pid  varchar,
+    reg_country varchar,
+    reg_nr      varchar,
+    incident_time     timestamp,
+    driver_name varchar,
+    incident_location varchar,
+    penalty_points    int,
+    PRIMARY KEY ((driver_pid), reg_country, reg_nr, incident_time)
+) WITH CLUSTERING ORDER BY (reg_country ASC, reg_nr ASC, incident_time DESC);
+
+
+
+query
+
+SELECT SUM(penalty_points) as total_points 
+FROM incidents_by_driver 
+WHERE driver_pid = 'H-100';
